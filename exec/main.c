@@ -6,7 +6,7 @@
 /*   By: dadou <dadou@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/04 01:25:41 by jealefev          #+#    #+#             */
-/*   Updated: 2024/12/29 12:50:08 by dadou            ###   ########.fr       */
+/*   Updated: 2024/12/29 17:41:25 by dadou            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ int render_loop(void *param)
     return (0);
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
     t_game *game;
     t_mlx *mlx;
 
+    if (argc != 2)
+        return(0);
     game = malloc(sizeof(t_game));
     if (!game)
     {
@@ -82,7 +84,7 @@ int main(void)
         check_malloc(game, game->mlx);
     init_mlx(mlx);
     init_game(game, mlx);
-    parse_file("./exec/map.cub", game, mlx);
+    parse_file(argv[1], game, mlx);
     calculate_map_dimensions(game);
     validate_config(mlx);
     validate_map(game);
@@ -90,7 +92,6 @@ int main(void)
     key_events(game, mlx);
     mlx_loop_hook(mlx->mlx, render_loop, game);
     mlx_loop(mlx->mlx);
-
     return (0);
 }
 
